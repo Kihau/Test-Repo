@@ -9,20 +9,17 @@
         KeyDown="Window_KeyDown" KeyUp="Window_KeyUp"
         Background="WhiteSmoke">
 
-    <Canvas x:Name="canvas" MouseUp="canvas_MouseUp" MouseDown="canvas_MouseDown">
+    <Canvas x:Name="canvas" MouseUp="Canvas_MouseUp" MouseDown="Canvas_MouseDown">
         
         <Rectangle x:Name="rect1" Canvas.Top="113" Canvas.Left="179" Height="60" Width="120"
                    Fill="Aquamarine" Stroke="Black" Opacity=".85"
-                   MouseMove="rect1_MouseMove" Panel.ZIndex="0"/>
+                   MouseMove="MoveShape" Panel.ZIndex="0"/>
         <Rectangle x:Name="rect2" Canvas.Top="269" Canvas.Left="280" Height="60" Width="120"
                    Fill="LightPink" Stroke="Black" Opacity=".85"
-                   MouseMove="rect2_MouseMove" Panel.ZIndex="0"/>
+                   MouseMove="MoveShape" Panel.ZIndex="0"/>
         <Ellipse x:Name="circle1" Width="100" Height="100" Canvas.Left="541" Canvas.Top="229"
                  Fill="LightBlue"  Stroke="Black" Opacity=".85"
-                 MouseMove="circle1_MouseMove" Panel.ZIndex="0"/>
-        <Label Name="label_grav" Content="Gravity: " Canvas.Left="704"/>
-        <Label Name="label_velx" Content="Velocity X: " Canvas.Left="690" Canvas.Top="20"/>
-        <Label Name="label_vely" Content="Velocity Y: " Canvas.Left="690" Canvas.Top="40"/>
+                 MouseMove="MoveShape" Panel.ZIndex="0"/>
 
     </Canvas>
 
