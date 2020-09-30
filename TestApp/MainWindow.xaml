@@ -6,13 +6,13 @@
         xmlns:local="clr-namespace:TestApp"
         mc:Ignorable="d"
         Title="Test kolizji and stuff" Height="450" Width="800"
-        KeyDown="Window_KeyDown" KeyUp="Window_KeyUp"
+        KeyDown="Window_KeyDown" KeyUp="Window_KeyUp" Closed="Window_Closed"
         Background="WhiteSmoke">
 
     <Canvas x:Name="canvas" MouseUp="Canvas_MouseUp" MouseDown="Canvas_MouseDown">
         
         <Rectangle x:Name="rect1" Canvas.Top="113" Canvas.Left="179" Height="60" Width="120"
-                   Fill="Aquamarine" Stroke="Black" Opacity=".85"
+                   Fill="Aquamarine" Stroke="Black" Opacity=".85" 
                    MouseMove="MoveShape" Panel.ZIndex="0"/>
         <Rectangle x:Name="rect2" Canvas.Top="269" Canvas.Left="280" Height="60" Width="120"
                    Fill="LightPink" Stroke="Black" Opacity=".85"

@@ -12,6 +12,7 @@ namespace TestApp
             Top, Bottom, Left, Right, None
         }
 
+        // DUMB
         public static Side RectColidedSide(BetterShape r1, BetterShape r2)
         {
             if (r1.Left < r2.Right) return Side.Right;
