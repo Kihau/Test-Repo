@@ -10,6 +10,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="65" />
             <RowDefinition Height="1*" />
+            <RowDefinition Height="59" />
         </Grid.RowDefinitions>
 
 
@@ -30,7 +31,7 @@
             <Label Name="labal_grav" Content="Gravity: " Grid.Row="0" Grid.Column="0"/>
             <Label Name="labal_height" Content="Height: " Grid.Row="1" Grid.Column="0"/>
             <Label Name="labal_width" Content="Width: " Grid.Row="0" Grid.Column="1"/>
-            <Label Name="labal_mousepos" Content="Mouse pos: " Grid.Row="1" Grid.Column="1"/>
+            <Label Name="labal_mousepos" Content="Mouse " Grid.Row="1" Grid.Column="1"/>
         </Grid>
 
         <ListView Margin="5" Name="shapeView" Grid.Row="1">
@@ -48,5 +49,18 @@
                 </GridView>
             </ListView.View>
         </ListView>
+
+        <Grid Grid.Row="2" Margin="0,0,0,5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+
+            <Button Content="Reset" Margin="5,0,2.5,0" Grid.Column="0"/>
+            <Button Content="Add" Margin="2.5,0,2.5,0" Grid.Column="1"/>
+            <Button Content="Remove" Margin="2.5,0,5,0" Grid.Column="2"/>
+        </Grid>
+        
     </Grid>
 </Window>

@@ -1,15 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Threading;
 using System.Windows;
-using System.Windows.Automation.Peers;
-using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Shapes;
 using System.Windows.Threading;
-using System.Xml;
+
 
 namespace TestApp
 {
@@ -41,6 +38,7 @@ namespace TestApp
         List<BetterShape> sps = new List<BetterShape>();
         decimal gravity = 0.0m;
         bool IsGKeyDown { get; set; }
+        const double maxFPS = 120;
 
         private void Window_KeyDown(object sender, KeyEventArgs e)
         {
@@ -94,9 +92,9 @@ namespace TestApp
             //sps.ForEach(x => FreeWindow(x));
             CheckCollision();
 
-            if (dt.ElapsedMilliseconds > 15) dt.Restart();
+            if (dt.ElapsedMilliseconds > 1000 / maxFPS) dt.Restart();
 
-            propwindow.UpdateWindow(sps, gravity);
+            propwindow.UpdateWindow(sps, gravity, Mouse.GetPosition(this));
         }
 
         // Object can move outside and return to the window
@@ -112,7 +110,7 @@ namespace TestApp
         // Object cannot move outside the window
         private void BlockedWindow(BetterShape s)
         {
-            // TO DO: FIX ???? GRAVITY LOSS?
+            // WPF IS BAD
             if (s.Bottom > this.ActualHeight - 35)
             {
                 s.Bottom = this.ActualHeight - 35;
@@ -127,6 +125,7 @@ namespace TestApp
             if (s.Right > this.ActualWidth - 20)
             {
                 s.Right = this.ActualWidth - 20;
+                s.VelocityY -= gravity * (decimal)dt.Elapsed.TotalSeconds;
                 s.VelocityX = -s.VelocityX;
             }
             else if (s.Left < 0)
@@ -138,7 +137,7 @@ namespace TestApp
         
         private void UpdatePosition(BetterShape s)
         {
-            if (!s.IsHeld && dt.ElapsedMilliseconds > 15)
+            if (!s.IsHeld && dt.ElapsedMilliseconds > 1000 / maxFPS)
             {
                 s.VelocityY += gravity * (decimal)dt.Elapsed.TotalSeconds;
                 s.X += (double)s.VelocityX * dt.Elapsed.TotalSeconds;
