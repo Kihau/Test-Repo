@@ -11,6 +11,7 @@ namespace TestApp
         // temp
         public SolidColorBrush baseColor { get; private set; }
 
+        public string Name { get; private set; }
         public decimal VelocityX { get; set; }
         public decimal VelocityY { get; set; }
         public bool PrevClicked { get; set; }
@@ -35,8 +36,10 @@ namespace TestApp
             this.VelocityY = 0.0m;
             this.IsHeld = false;
             this.IsColliding = false;
+            this.PrevClicked = false;
 
             baseColor = (SolidColorBrush)shape.Fill;
+            Name = shape.Name;
         }
 
         public double Height

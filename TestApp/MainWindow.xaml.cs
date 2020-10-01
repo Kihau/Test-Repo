@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Threading;
 using System.Windows;
 using System.Windows.Automation.Peers;
@@ -8,6 +9,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Shapes;
 using System.Windows.Threading;
+using System.Xml;
 
 namespace TestApp
 {
@@ -19,19 +21,23 @@ namespace TestApp
         public MainWindow()
         {
             InitializeComponent();
-            timer.Interval = TimeSpan.FromMilliseconds(15);
+            DispatcherTimer timer = new DispatcherTimer();
+            timer.Interval = TimeSpan.FromMilliseconds(1);
             timer.Tick += Timer_Tick;
             timer.Start();
+
+            dt.Start();
 
             sps.Add(new BetterShape(rect1));
             sps.Add(new BetterShape(rect2));
             sps.Add(new BetterShape(circle1));
 
+            propwindow = new PropertyWindow(sps, this);
             propwindow.Show();
         }
 
-        DispatcherTimer timer = new DispatcherTimer();
-        PropertyWindow propwindow = new PropertyWindow();
+        Stopwatch dt = new Stopwatch();
+        PropertyWindow propwindow;
         List<BetterShape> sps = new List<BetterShape>();
         decimal gravity = 0.0m;
         bool IsGKeyDown { get; set; }
@@ -87,6 +93,10 @@ namespace TestApp
             sps.ForEach(x => BlockedWindow(x));
             //sps.ForEach(x => FreeWindow(x));
             CheckCollision();
+
+            if (dt.ElapsedMilliseconds > 15) dt.Restart();
+
+            propwindow.UpdateWindow(sps, gravity);
         }
 
         // Object can move outside and return to the window
@@ -125,15 +135,16 @@ namespace TestApp
                 s.VelocityX = -s.VelocityX;
             }
         }
-
+        
         private void UpdatePosition(BetterShape s)
         {
-            if (!s.IsHeld)
+            if (!s.IsHeld && dt.ElapsedMilliseconds > 15)
             {
-                s.VelocityY += gravity * (decimal)timer.Interval.TotalSeconds;
-                s.X += (double)s.VelocityX * timer.Interval.TotalSeconds;
-                s.Y += (double)s.VelocityY * timer.Interval.TotalSeconds;
+                s.VelocityY += gravity * (decimal)dt.Elapsed.TotalSeconds;
+                s.X += (double)s.VelocityX * dt.Elapsed.TotalSeconds;
+                s.Y += (double)s.VelocityY * dt.Elapsed.TotalSeconds;
             }
+            else if (s.IsHeld) s.VelocityY = Math.Abs(s.VelocityY);
         }
 
         private void CheckCollision()
